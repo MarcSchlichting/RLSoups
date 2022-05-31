@@ -19,51 +19,57 @@ import numpy as np
 
 from stable_baselines3 import TD3
 from stable_baselines3.common.noise import NormalActionNoise, OrnsteinUhlenbeckActionNoise
+from stable_baselines3.td3.policies import TD3Policy
+from helpers import constant_schedule
 import torch
 
 NO_RUNS = 10
 
-# #Hopper
-# model = []
-
-# for i in range(NO_RUNS):
-#     env = gym.make("Hopper-v3")
-
-#     # The noise objects for TD3
-#     n_actions = env.action_space.shape[-1]
-#     action_noise = NormalActionNoise(mean=np.zeros(n_actions), sigma=0.1 * np.ones(n_actions))
-
-#     model.append(TD3("MlpPolicy", env, action_noise=action_noise, verbose=0, tensorboard_log="./hopper/",seed=i))
-#     model[-1].learn(total_timesteps=100000)
-#     model[-1].save("Hopper_{}".format(str(i).zfill(2)))
-
-# #Swimmer
-# model = []
-
-# for i in range(NO_RUNS):
-#     env = gym.make("Swimmer-v3")
-
-#     # The noise objects for TD3
-#     n_actions = env.action_space.shape[-1]
-#     action_noise = NormalActionNoise(mean=np.zeros(n_actions), sigma=0.1 * np.ones(n_actions))
-
-#     model.append(TD3("MlpPolicy", env, action_noise=action_noise, verbose=0, tensorboard_log="./swimmer/",seed=i))
-#     model[-1].learn(total_timesteps=100000)
-#     model[-1].save("Swimmer_{}".format(str(i).zfill(2)))
-
-#Walker
+#Hopper
 model = []
 
 for i in range(NO_RUNS):
-    env = gym.make("Walker2d-v3")
+    env = gym.make("Hopper-v3")
 
     # The noise objects for TD3
     n_actions = env.action_space.shape[-1]
     action_noise = NormalActionNoise(mean=np.zeros(n_actions), sigma=0.1 * np.ones(n_actions))
 
-    model.append(TD3("MlpPolicy", env, action_noise=action_noise, verbose=0, tensorboard_log="./walker2d/",seed=i))
+    policy_kw = {"net_arch":[64,64]}
+    model.append(TD3("MlpPolicy", env, action_noise=action_noise, verbose=0, policy_kwargs=policy_kw, tensorboard_log="./logs/hopper_small_policy/",seed=i))
     model[-1].learn(total_timesteps=100000)
-    model[-1].save("Walker2d_{}".format(str(i).zfill(2)))
+    model[-1].save("./models/hopper_small_policy/Hopper_{}".format(str(i).zfill(2)))
+
+# #Half Cheetah
+# model = []
+
+# for i in range(NO_RUNS):
+#     env = gym.make("HalfCheetah-v3")
+
+#     # The noise objects for TD3
+#     n_actions = env.action_space.shape[-1]
+#     action_noise = NormalActionNoise(mean=np.zeros(n_actions), sigma=0.1 * np.ones(n_actions))
+
+#     policy_kw = {"net_arch":[64,64]}
+#     model.append(TD3("MlpPolicy", env, action_noise=action_noise, verbose=0, tensorboard_log="./logs/halfcheetah_small_policy/",seed=i))
+#     model[-1].learn(total_timesteps=100000)
+#     model[-1].save("./models/halfcheetah_small_policy/HalfCheetah_{}".format(str(i).zfill(2)))
+
+
+# #Walker
+# model = []
+
+# for i in range(NO_RUNS):
+#     env = gym.make("Walker2d-v3")
+
+#     # The noise objects for TD3
+#     n_actions = env.action_space.shape[-1]
+#     action_noise = NormalActionNoise(mean=np.zeros(n_actions), sigma=0.1 * np.ones(n_actions))
+
+#     policy = MlpPolicy(env.observation_space,env.action_space,constant_schedule(0.001),net_arch=[64,64])
+#     model.append(TD3(policy, env, action_noise=action_noise, verbose=0, tensorboard_log="./logs/walker2d_small_policy/",seed=i))
+#     model[-1].learn(total_timesteps=100000)
+#     model[-1].save("./models/walker2d_small_policy/Walker2d_{}".format(str(i).zfill(2)))
 
 
 
