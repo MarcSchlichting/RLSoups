@@ -6,7 +6,7 @@ from stable_baselines3 import TD3
 from stable_baselines3.common.noise import NormalActionNoise, OrnsteinUhlenbeckActionNoise
 from stable_baselines3.td3.policies import TD3Policy
 # from wandb.integration.sb3 import WandbCallback
-from average_models import create_top_model,create_top_n_mean_model_parameters
+from average_models import create_top_model,create_top_n_mean_model_parameters,create_top_n_median_model_parameters,create_softmax_model_parameters
 from evaluation_methods import evaluate_policies_individually
 import torch
 from custom_callback import CurrentTrainReward
@@ -50,7 +50,7 @@ for j in range(int(NO_TOTAL_STEPS/AVERAGE_EVERY)):
     del model
     env = gym.make(GYM_NAME)
     env = Monitor(env,"./logs/{}".format(SAVE_ID))
-    model = [TD3.load("./models/{}/Hopper_{}".format(SAVE_ID,str(counter).zfill(3))) for i in range(NO_POLICIES)]
+    model = [TD3.load("./models/{}/Hopper_{}".format(SAVE_ID,str(j*NO_POLICIES+1+i).zfill(3))) for i in range(NO_POLICIES)]
     #average models
     env = gym.make(GYM_NAME)
     env = Monitor(env,"./logs/{}".format(SAVE_ID))
@@ -58,8 +58,13 @@ for j in range(int(NO_TOTAL_STEPS/AVERAGE_EVERY)):
     print(mean_list)
     print(performance)
 
-    m_top = create_top_model(model,mean_list)
-    # m_top = create_top_n_mean_model_parameters(model,mean_list,2)
+    #########WEIGHT METHOD###################
+    # m_top = create_top_model(model,performance)
+    m_top = create_top_n_mean_model_parameters(model,performance,5)
+    # m_top = create_top_n_median_model_parameters(model,performance,2)
+    # m_top = create_softmax_model_parameters(model,performance)
+    #########################################
+
     performance,_ = evaluate_policies_individually([m_top],env)
 
     model = [copy.deepcopy(m_top) for i in range(NO_POLICIES)]

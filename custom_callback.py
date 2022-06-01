@@ -12,6 +12,10 @@ class CurrentTrainReward(BaseCallback):
         self.current_train_reward = -np.inf
     
     def _on_step(self) -> bool:
+        # x, y = ts2xy(load_results(self.log_dir), 'timesteps')
+        # if len(x) > 0:
+        #     value = y[-1]
+        #     self.logger.record('non_smoothed_reward', value)
         return True
 
     def _on_training_end(self) -> None:
@@ -20,5 +24,5 @@ class CurrentTrainReward(BaseCallback):
         x, y = ts2xy(load_results(self.log_dir), 'timesteps')
         if len(x) > 0:
             # Mean training reward over the last 100 episodes
-            self.current_train_reward = np.mean(y[-10:])
+            self.current_train_reward = np.mean(y[-100:])
             print("Current Training Reward", self.current_train_reward)
