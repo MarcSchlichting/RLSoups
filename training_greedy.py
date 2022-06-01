@@ -6,15 +6,16 @@ from stable_baselines3 import TD3
 from stable_baselines3.common.noise import NormalActionNoise, OrnsteinUhlenbeckActionNoise
 from stable_baselines3.td3.policies import TD3Policy
 # from wandb.integration.sb3 import WandbCallback
-from average_models import create_top_model
+from average_models import create_top_model,create_top_n_mean_model_parameters
 from evaluation_methods import evaluate_policies_individually
 import torch
 
-NO_POLICIES = 10
-AVERAGE_EVERY = 50000
+
+NO_POLICIES = 3
+AVERAGE_EVERY = 10000
 GYM_NAME = "Hopper-v3"
-NO_TOTAL_STEPS = 1000000
-SAVE_ID = "hopper_greedy_50"
+NO_TOTAL_STEPS = 100000
+SAVE_ID = "hopper_test_1"
 
 model = []
 for i in range(NO_POLICIES):
@@ -46,6 +47,7 @@ for j in range(int(NO_TOTAL_STEPS/AVERAGE_EVERY)):
     mean_list,std_list = evaluate_policies_individually(model,env)
 
     m_top = create_top_model(model,mean_list)
+    # m_top = create_top_n_mean_model_parameters(model,mean_list,2)
     performance,_ = evaluate_policies_individually([m_top],env)
 
     model = [copy.deepcopy(m_top) for i in range(NO_POLICIES)]

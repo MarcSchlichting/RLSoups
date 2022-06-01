@@ -64,7 +64,7 @@ def create_top_model(models:list,performance:list):
         raise NotImplementedError
     performance = torch.Tensor(performance)
     _,idx = torch.topk(performance,1)
-    new_model = models[idx]
+    new_model = models[idx.item()]
     return new_model
 
 def create_top_n_median_model_parameters(models:list,performance,n):
