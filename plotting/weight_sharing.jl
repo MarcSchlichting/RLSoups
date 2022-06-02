@@ -124,3 +124,30 @@ df = CSV.read("walker10000/walker10000.csv", DataFrame)
 N_UPDATES = 10;
 p = plot_tree(N_UPDATES, "Walker 10000", df, hex_red)
 save("treeimages/walker10000.pdf", p)
+
+# Hopper mean
+df = CSV.read("hopper_mean/hopper_mean.csv", DataFrame)
+N_UPDATES = 10;
+p = plot_tree(N_UPDATES, "Hopper Mean", df, hex_red)
+save("treeimages/hopper_mean.pdf", p)
+
+
+# Hopper median
+df = CSV.read("hopper_median/hopper_median.csv", DataFrame)
+N_UPDATES = 10;
+p = plot_tree(N_UPDATES, "Hopper Median", df, hex_red)
+save("treeimages/hopper_median.pdf", p)
+
+
+# Walker mean
+df = CSV.read("walker_mean/walker_mean.csv", DataFrame)
+N_UPDATES = 10;
+p = plot_tree(N_UPDATES, "Walker Mean", df, hex_red)
+save("treeimages/walker_mean.pdf", p)
+
+
+# Walker median
+df = CSV.read("walker_median/walker_median.csv", DataFrame)
+N_UPDATES = 10;
+p = plot_tree(N_UPDATES, "Walker Median", df, hex_red)
+save("treeimages/walker_median.pdf", p)
