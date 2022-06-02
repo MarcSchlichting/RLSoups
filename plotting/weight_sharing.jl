@@ -71,8 +71,56 @@ end
 #*******************************************************************************
 # PLOTS
 #*******************************************************************************
+# Update every 100000 interactions
+df = CSV.read("hopper100000/hopper100000.csv", DataFrame)
+N_UPDATES = 1;
+p = plot_tree(N_UPDATES, "Hopper 100000", df, hex_red)
+save("treeimages/hopper100000.pdf", p)
+
+
+# Update every 50000 interactions
+df = CSV.read("hopper50000/hopper50000.csv", DataFrame)
+N_UPDATES = 2;
+p = plot_tree(N_UPDATES, "Hopper 50000", df, hex_red)
+save("treeimages/hopper50000.pdf", p)
+
+
 # Update every 20000 interactions
 df = CSV.read("hopper20000/hopper20000.csv", DataFrame)
 N_UPDATES = 5;
 p = plot_tree(N_UPDATES, "Hopper 20000", df, hex_red)
-save("hopper20000.pdf", p)
+save("treeimages/hopper20000.pdf", p)
+
+
+# Update every 10000 interactions
+df = CSV.read("hopper10000/hopper10000.csv", DataFrame)
+N_UPDATES = 10;
+p = plot_tree(N_UPDATES, "Hopper 10000", df, hex_red)
+save("treeimages/hopper10000.pdf", p)
+
+# Update every 100000 interactions
+df = CSV.read("walker100000/walker100000.csv", DataFrame)
+N_UPDATES = 1;
+p = plot_tree(N_UPDATES, "Walker 100000", df, hex_red)
+save("treeimages/walker100000.pdf", p)
+
+
+# Update every 50000 interactions
+df = CSV.read("walker50000/walker50000.csv", DataFrame)
+N_UPDATES = 2;
+p = plot_tree(N_UPDATES, "Walker 50000", df, hex_red)
+save("treeimages/walker50000.pdf", p)
+
+
+# Update every 20000 interactions
+df = CSV.read("walker20000/walker20000.csv", DataFrame)
+N_UPDATES = 5;
+p = plot_tree(N_UPDATES, "Walker 20000", df, hex_red)
+save("treeimages/walker20000.pdf", p)
+
+
+# Update every 10000 interactions
+df = CSV.read("walker10000/walker10000.csv", DataFrame)
+N_UPDATES = 10;
+p = plot_tree(N_UPDATES, "Walker 10000", df, hex_red)
+save("treeimages/walker10000.pdf", p)
