@@ -1,0 +1,21 @@
+\begin{tikzpicture}[]
+\begin{axis}[
+  legend pos = {north west},
+  legend style = {{nodes={scale=0.75}}},
+  ylabel = {Mean Reward},
+  title = {Average Reward per Episode (Hopper)},
+  xlabel = {Interaction},
+  enlarge x limits=false,grid=both
+]
+
+\addplot [name path = A, vandeusen, opacity = 0.0, forget plot] table [x = {interaction}, y = {lower}, col sep=comma] {savedata/hopper_rew.csv};
+
+\addplot [name path = B, vandeusen, opacity = 0.0, forget plot] table [x = {interaction}, y = {upper}, col sep=comma] {savedata/hopper_rew.csv};
+
+\addplot [vandeusen, very thick] table [x = {interaction}, y = {mean}, col sep=comma] {savedata/hopper_rew.csv}; \addlegendentry{Mean reward};
+
+\addplot [vandeusen_light,opacity = 0.5] fill between [of = A and B]; \addlegendentry{$2\sigma$ error bounds};
+
+\end{axis}
+\end{tikzpicture}
+
