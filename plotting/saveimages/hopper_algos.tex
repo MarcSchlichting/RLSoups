@@ -1,0 +1,29 @@
+\begin{tikzpicture}[]
+\begin{axis}[
+  legend pos = {north west},
+  legend style = {{nodes={scale=0.75}}},
+  ylabel = {value},
+  title = {PPO vs TD3: Hopper},
+  xlabel = {step},
+  enlarge x limits=false,grid=both
+]
+
+\addplot [name path = A, vandeusen, opacity = 0.0, forget plot] table [x = {interaction}, y = {lower}, col sep=comma] {savedata/hopper20000.csv};
+
+\addplot [name path = B, vandeusen, opacity = 0.0, forget plot] table [x = {interaction}, y = {upper}, col sep=comma] {savedata/hopper20000.csv};
+
+\addplot [vandeusen, thick] table [x = {interaction}, y = {mean}, col sep=comma] {savedata/hopper20000.csv}; \addlegendentry{TD3 mean};
+
+\addplot [vandeusen_light,opacity = 0.5] fill between [of = A and B]; \addlegendentry{TD3 $4\sigma$ bounds};
+
+\addplot [name path = A, cordovan, opacity = 0.0, forget plot] table [x = {interaction}, y = {lower}, col sep=comma] {savedata/hopper_ppo.csv};
+
+\addplot [name path = B, cordovan, opacity = 0.0, forget plot] table [x = {interaction}, y = {upper}, col sep=comma] {savedata/hopper_ppo.csv};
+
+\addplot [cordovan, thick] table [x = {interaction}, y = {mean}, col sep=comma] {savedata/hopper_ppo.csv}; \addlegendentry{PPO mean};
+
+\addplot [cordovan_light,opacity = 0.5] fill between [of = A and B]; \addlegendentry{PPO $4\sigma$ bounds};
+
+\end{axis}
+\end{tikzpicture}
+
